@@ -1,86 +1,52 @@
 ﻿using System;
-using System.IO;
 
 namespace FileUtility
 {
-	class CommandLineParser
+	static class CommandLineParser
 	{
-		public void Helper()
+		private const string NoCommandOrOption = "No options or commands entered";
+		private const string InvalidCommandOrOption = "Entered option or command not found";
+		private static void Helper()
 		{
 			Console.WriteLine($"Hello  {Environment.UserName}!");
 			Console.WriteLine($"Is a simple file utility");
 			Console.WriteLine($"Usage:");
-			Console.WriteLine($"\t{"FileUtility [options] [command]",-70}");
+			Console.WriteLine($"\t{"FileUtility [options] [command] [arguments]",-70}");
 			Console.WriteLine($"Options:");
 			Console.WriteLine($"\t{"--help,-h,-?",-20} - {"Show help and usage information",-70}");
 			Console.WriteLine($"Commands:");
 			Console.WriteLine($"\t{"rename",-20} - {"Rename file",-70}");
 			Console.WriteLine($"\t(");
 			Console.WriteLine($"\t\tUsage:");
-			Console.WriteLine($"\t\t{"FileUtility rename [options]",-70}");
-			Console.WriteLine($"\t\tOptions: ");
+			Console.WriteLine($"\t\t{"FileUtility rename [arguments]",-70}");
+			Console.WriteLine($"\t\tArguments: ");
 			Console.WriteLine($"\t\t{"-input (REQUIRED)",-20} - {"The input file name",-70}");
 			Console.WriteLine($"\t\t{"-output (REQUIRED)",-20} - {"The output file name",-70}");
 			Console.WriteLine($"\t)");
-
 		}
-
-		public void ParseArgs(string[] pters)
+		public static void ParseArgs(string[] parameters)
 		{
-			if (pters.Length == 0)
+			if (parameters == null || parameters.Length == 0)
 			{
-				Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine("\nNo options or commands entered\n");
-				Console.ResetColor();
+				ConsoleActions.WriteMessage(NoCommandOrOption, ConsoleColor.Red);
 				Helper();
+				return;
 			}
-			else
+
+			switch (parameters[0])
 			{
-				switch (pters[0])
-				{
-					case "--help":
-					case "-h":
-					case "-?":
-						Helper();
-						break;
-					case "rename":
-						if (pters.Length < 3)
-						{
-							Console.ForegroundColor = ConsoleColor.Red;
-							Console.WriteLine("\nRequired parameters are not filled\n");
-							Console.ResetColor();
-							Helper();
-						}
-						else
-						{
-							RenameMethod(pters[1], pters[2]);
-						}
-						break;
-					default:
-						Console.ForegroundColor = ConsoleColor.Red;
-						Console.WriteLine("\nEntered option or command not found\n");
-						Console.ResetColor();
-						break;
-				}
+				case "--help":
+				case "-h":
+				case "-?":
+					Helper();
+					break;
+				case "rename":
+					CommandLineExecutor.Rename(parameters);
+					break;
+				default:
+					ConsoleActions.WriteMessage(InvalidCommandOrOption, ConsoleColor.Red);
+					break;
 			}
 		}
-
-		public void RenameMethod(string input, string output)
-		{
-			try
-			{
-				File.Move(input, output);
-			}
-			catch (Exception ex)
-			{
-				Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine($"\n{ex.Message}\n");
-				Console.ResetColor();
-
-			}
-
-		}
-
 	}
-
 }
