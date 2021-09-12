@@ -4,7 +4,8 @@
 	{
 		static void Main(string[] args)
 		{
-			CommandLineParser.ParseArgs(args);
+			Command cliCommand = CommandLineParser.ParseArgs(args);
+
 		}
 	}
 }

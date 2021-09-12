@@ -1,22 +1,26 @@
 ﻿using System;
-using System.IO;
 
 namespace FileUtility
 {
+	using FileUtility.Commands;
+
 	static class CommandLineExecutor
 	{
-		private const string SucessfullyRename = "File renamed sucessfully";
-		public static void Rename(string [] parameters)
-		{
-			try
-			{
-				File.Move(parameters[1], parameters[2]);
-				ConsoleActions.WriteMessage(SucessfullyRename, ConsoleColor.Green);
-			}
-			catch (Exception ex)
-			{
-				ConsoleActions.WriteMessage(ex.Message, ConsoleColor.Red);
-			}
-		}
+		private const string NoCommandOrOption = "No options or commands entered";
+
+		private static ICommand _command;
+
+		public static void Execute(Command commandData)
+        {
+			if(commandData.Name == string.Empty)
+            {
+				ConsoleActions.WriteMessage(NoCommandOrOption, ConsoleColor.Red);
+
+				_command = new HelpCommand();
+				_command.Execute(commandData);
+            }
+
+			// TODO: reflection logic
+        }
 	}
 }
