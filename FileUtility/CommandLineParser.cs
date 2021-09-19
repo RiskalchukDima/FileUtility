@@ -3,33 +3,16 @@ using System.Linq;
 
 namespace FileUtility
 {
+    using FileUtility.Commands;
+
     static class CommandLineParser
     {
-        private const string NoCommandOrOption = "No options or commands entered";
-        private const string InvalidCommandOrOption = "Entered option or command not found";
-
         public static Command ParseArgs(string[] parameters)
         {
             if (parameters == null || parameters.Length == 0)
             {
-                // To check
                 return new Command();
             }
-
-            //switch (parameters[0])
-            //{
-            //	case "--help":
-            //	case "-h":
-            //	case "-?":
-            //		Helper();
-            //		break;
-            //	case "rename":
-            //		CommandLineExecutor.Rename(parameters);
-            //		break;
-            //	default:
-            //		ConsoleActions.WriteMessage(InvalidCommandOrOption, ConsoleColor.Red);
-            //		break;
-            //}
 
             string commandName = parameters[0];
             string[] commandArguments = ParseArguments(parameters.Skip(1).ToArray());
@@ -43,7 +26,6 @@ namespace FileUtility
             };
         }
 
-        // To check
         private static string[] ParseArguments(string [] parameters)
         {
             List<string> arguments = new List<string>();

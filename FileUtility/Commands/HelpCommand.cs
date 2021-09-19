@@ -2,14 +2,15 @@
 
 namespace FileUtility.Commands
 {
-    class HelpCommand : ICommand
+	[CommandName(Name = "help")]
+	class HelpCommand : ICommand
     {
         public void Execute(Command commandData)
         {
 			Console.WriteLine($"Hello  {Environment.UserName}!");
 			Console.WriteLine($"Is a simple file utility");
 			Console.WriteLine($"Usage:");
-			Console.WriteLine($"\t{"FileUtility [options] [command] [arguments]",-70}");
+			Console.WriteLine($"\t{"FileUtility [command] [options] [arguments]",-70}");
 			Console.WriteLine($"Options:");
 			Console.WriteLine($"\t{"--help,-h,-?",-20} - {"Show help and usage information",-70}");
 			Console.WriteLine($"Commands:");

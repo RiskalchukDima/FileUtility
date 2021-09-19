@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FileUtility": {
+      "commandName": "Project",
+      "commandLineArgs": "help"
+    }
+  }
+}
